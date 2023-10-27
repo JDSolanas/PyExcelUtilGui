@@ -8,6 +8,8 @@ def build_layout():
     layout = [[sg.Text("Selecciona la ruta raíz. Se buscarán ficheros *.xls y *.xlsx:")],
               [sg.Input(key='-FOLDER-', disabled=True), sg.FolderBrowse()],
               [sg.Checkbox("Buscar en subcarpetas", key="-CHK_SUBFOLDERS-")],
+              [sg.Text("Define qué celda se buscará en los excel.")],
+              [sg.InputText(key='-CELL-'), sg.Text()],
               [sg.Button('Ok'), sg.Button('Quit')]]
     return layout
 
@@ -22,6 +24,7 @@ if __name__ == '__main__':
         if event == 'Ok':
             selected_folder = values['-FOLDER-']
             search_subfolders = values['-CHK_SUBFOLDERS-']
-            sg.popup(f'Carpeta seleccionada: {selected_folder}\nBuscar en subcarpetas: {search_subfolders}')
+            selected_cell = values['-CELL-']
+            sg.popup(f'Carpeta seleccionada: {selected_folder}\nBuscar en subcarpetas: {search_subfolders}\nCelda elegida: {selected_cell}')
 
     window.close()
