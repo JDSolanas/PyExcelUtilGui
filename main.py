@@ -55,6 +55,12 @@ if __name__ == '__main__':
             # Obtención de datos
             excel_obtained_data = (searcher
                                    .search(folder=selected_folder, is_subfolders=search_subfolders, cell=selected_cell))
+            if not excel_obtained_data:  # Si no se ha encontrado ningún dato en ningún Excel
+                sg.popup(f'No se ha encontrado ningún dato en ningún Excel con los siguientes datos:\n'
+                         f'1. Ruta: {selected_folder}\n'
+                         f'2. ¿Busca en subcarpetas?: {search_subfolders}\n'
+                         f'3. Celda: {selected_cell}')
+                continue
 
             # Escritura de datos
             writer.write_excel_file(excel_obtained_data)
