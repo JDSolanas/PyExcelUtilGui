@@ -1,4 +1,5 @@
 import PySimpleGUI as sg
+import searcher
 
 CONST_DEFAULT_ELEMENT_SIZE_X = 50
 CONST_DEFAULT_ELEMENT_SIZE_Y = 50
@@ -26,5 +27,7 @@ if __name__ == '__main__':
             search_subfolders = values['-CHK_SUBFOLDERS-']
             selected_cell = values['-CELL-']
             sg.popup(f'Carpeta seleccionada: {selected_folder}\nBuscar en subcarpetas: {search_subfolders}\nCelda elegida: {selected_cell}')
+            excel_files = searcher.search(folder=selected_folder, is_subfolders=search_subfolders, cell=selected_cell)
+            sg.popup(f'Archivos Excel que contienen la celda especificada y su contenido:{excel_files}')
 
     window.close()
