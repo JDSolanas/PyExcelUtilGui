@@ -18,6 +18,13 @@ def build_layout() -> [[]]:
     return layout
 
 
+def valida_folder(value_folder) -> bool:
+    is_folder_ok = value_folder != ""
+    if not is_folder_ok:
+        sg.popup(f'{value_folder} No es una carpeta válida')
+    return is_folder_ok
+
+
 def valida_cell(value_cell) -> bool:
     is_cell_ok = bool(re.match(CONST_RE_CELDA, value_cell))
     if not is_cell_ok:
@@ -37,15 +44,19 @@ if __name__ == '__main__':
             search_subfolders = values['-CHK_SUBFOLDERS-']
             selected_cell = values['-CELL-']
 
+            # Validaciones previas
+            folder_ok = valida_folder(selected_folder)
+            if not folder_ok:
+                continue
             cell_ok = valida_cell(selected_cell)
             if not cell_ok:
                 continue
 
-            sg.popup(f'Carpeta seleccionada: {selected_folder}\n'
-                     f'Buscar en subcarpetas: {search_subfolders}\n'
-                     f'Celda elegida: {selected_cell}')
+            # Obtención de datos
             excel_obtained_data = (searcher
                                    .search(folder=selected_folder, is_subfolders=search_subfolders, cell=selected_cell))
+
+            # Escritura de datos
             writer.write_excel_file(excel_obtained_data)
             sg.popup(f'Excel creado en {os.getcwd()}')
 
