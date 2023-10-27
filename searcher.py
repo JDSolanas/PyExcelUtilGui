@@ -44,7 +44,7 @@ def search(folder, cell, is_subfolders) -> {}:
             if file.endswith(('.xlsx', '.xls')):
                 file_path = os.path.join(root, file)
                 cell_value = get_value_from_cell(file_path, cell)
-                if cell_value != "":
+                if cell_value not in [None, ""]:
                     excel_data[file_path] = cell_value
 
         if not is_subfolders:
