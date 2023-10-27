@@ -1,4 +1,5 @@
 import PySimpleGUI as sg
+import os
 import searcher
 import writer
 
@@ -27,9 +28,13 @@ if __name__ == '__main__':
             selected_folder = values['-FOLDER-']
             search_subfolders = values['-CHK_SUBFOLDERS-']
             selected_cell = values['-CELL-']
-            sg.popup(f'Carpeta seleccionada: {selected_folder}\nBuscar en subcarpetas: {search_subfolders}\nCelda elegida: {selected_cell}')
-            excel_obtained_data = searcher.search(folder=selected_folder, is_subfolders=search_subfolders, cell=selected_cell)
+            sg.popup(f'Carpeta seleccionada: {selected_folder}\n'
+                     f'Buscar en subcarpetas: {search_subfolders}\n'
+                     f'Celda elegida: {selected_cell}')
+            excel_obtained_data = (searcher
+                                   .search(folder=selected_folder, is_subfolders=search_subfolders, cell=selected_cell))
             sg.popup(f'Archivos Excel que contienen la celda especificada y su contenido:{excel_obtained_data}')
             writer.write_excel_file(excel_obtained_data)
+            sg.popup(f'Excel creado en {os.getcwd()}')
 
     window.close()
